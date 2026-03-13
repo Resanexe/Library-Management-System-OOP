@@ -1,47 +1,50 @@
-// Book class - INHERITS from LibraryItem (Inheritance using 'extends')
 public class Book extends LibraryItem {
 
-    // Additional attributes specific to Book
+    private static final String RESET  = "\033[0m";
+    private static final String BOLD   = "\033[1m";
+    private static final String YELLOW = "\033[33m";
+    private static final String CYAN   = "\033[36m";
+    private static final String GREEN  = "\033[32m";
+    private static final String RED    = "\033[31m";
+    private static final String WHITE  = "\033[37m";
+
     private String isbn;
     private int numberOfPages;
     private String genre;
 
-    // Constructor calling superclass constructor using 'super'
     public Book(String itemId, String title, String author, String isbn, int numberOfPages, String genre) {
-        super(itemId, title, author); // Call parent constructor
+        super(itemId, title, author);
         this.isbn = isbn;
         this.numberOfPages = numberOfPages;
         this.genre = genre;
     }
 
-    // Getters and Setters
-    public String getIsbn() { return isbn; }
-    public void setIsbn(String isbn) { this.isbn = isbn; }
+    public String getIsbn()                        { return isbn; }
+    public void setIsbn(String isbn)               { this.isbn = isbn; }
+    public int getNumberOfPages()                  { return numberOfPages; }
+    public void setNumberOfPages(int n)            { this.numberOfPages = n; }
+    public String getGenre()                       { return genre; }
+    public void setGenre(String genre)             { this.genre = genre; }
 
-    public int getNumberOfPages() { return numberOfPages; }
-    public void setNumberOfPages(int numberOfPages) { this.numberOfPages = numberOfPages; }
-
-    public String getGenre() { return genre; }
-    public void setGenre(String genre) { this.genre = genre; }
-
-    // POLYMORPHISM - Method overriding (overrides abstract method from LibraryItem)
     @Override
-    public String getItemType() {
-        return "Book";
-    }
+    public String getItemType() { return "Book"; }
 
-    // POLYMORPHISM - Method overriding
     @Override
     public void displayInfo() {
-        System.out.println("-----------------------------");
-        System.out.println("Type       : " + getItemType());
-        System.out.println("ID         : " + getItemId());
-        System.out.println("Title      : " + getTitle());
-        System.out.println("Author     : " + getAuthor());
-        System.out.println("ISBN       : " + isbn);
-        System.out.println("Pages      : " + numberOfPages);
-        System.out.println("Genre      : " + genre);
-        System.out.println("Status     : " + getAvailabilityStatus());
-        System.out.println("-----------------------------");
+        String status = isAvailable()
+            ? GREEN + "✔ Available" + RESET
+            : RED   + "✘ Borrowed"  + RESET;
+
+        System.out.println(YELLOW + "  ┌──────────────────────────────────────┐" + RESET);
+        System.out.println(YELLOW + "  │  📖  " + BOLD + WHITE + "BOOK" + RESET + YELLOW + "                                 │" + RESET);
+        System.out.println(YELLOW + "  ├──────────────────────────────────────┤" + RESET);
+        System.out.println(YELLOW + "  │ " + CYAN + " ID      : " + RESET + WHITE + getItemId()     + RESET);
+        System.out.println(YELLOW + "  │ " + CYAN + " Title   : " + RESET + WHITE + getTitle()      + RESET);
+        System.out.println(YELLOW + "  │ " + CYAN + " Author  : " + RESET + WHITE + getAuthor()     + RESET);
+        System.out.println(YELLOW + "  │ " + CYAN + " ISBN    : " + RESET + WHITE + isbn            + RESET);
+        System.out.println(YELLOW + "  │ " + CYAN + " Pages   : " + RESET + WHITE + numberOfPages   + RESET);
+        System.out.println(YELLOW + "  │ " + CYAN + " Genre   : " + RESET + WHITE + genre           + RESET);
+        System.out.println(YELLOW + "  │ " + CYAN + " Status  : " + RESET + status);
+        System.out.println(YELLOW + "  └──────────────────────────────────────┘" + RESET);
     }
 }

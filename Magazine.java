@@ -1,12 +1,17 @@
-// Magazine class - INHERITS from LibraryItem (Inheritance)
 public class Magazine extends LibraryItem {
 
-    // Attributes specific to Magazine
+    private static final String RESET  = "\033[0m";
+    private static final String BOLD   = "\033[1m";
+    private static final String PURPLE = "\033[35m";
+    private static final String CYAN   = "\033[36m";
+    private static final String GREEN  = "\033[32m";
+    private static final String RED    = "\033[31m";
+    private static final String WHITE  = "\033[37m";
+
     private int issueNumber;
     private String month;
     private String category;
 
-    // Constructor
     public Magazine(String itemId, String title, String author, int issueNumber, String month, String category) {
         super(itemId, title, author);
         this.issueNumber = issueNumber;
@@ -14,34 +19,32 @@ public class Magazine extends LibraryItem {
         this.category = category;
     }
 
-    // Getters and Setters
-    public int getIssueNumber() { return issueNumber; }
-    public void setIssueNumber(int issueNumber) { this.issueNumber = issueNumber; }
+    public int getIssueNumber()               { return issueNumber; }
+    public void setIssueNumber(int n)         { this.issueNumber = n; }
+    public String getMonth()                  { return month; }
+    public void setMonth(String month)        { this.month = month; }
+    public String getCategory()               { return category; }
+    public void setCategory(String category)  { this.category = category; }
 
-    public String getMonth() { return month; }
-    public void setMonth(String month) { this.month = month; }
-
-    public String getCategory() { return category; }
-    public void setCategory(String category) { this.category = category; }
-
-    // POLYMORPHISM - Method overriding
     @Override
-    public String getItemType() {
-        return "Magazine";
-    }
+    public String getItemType() { return "Magazine"; }
 
-    // POLYMORPHISM - Method overriding
     @Override
     public void displayInfo() {
-        System.out.println("-----------------------------");
-        System.out.println("Type       : " + getItemType());
-        System.out.println("ID         : " + getItemId());
-        System.out.println("Title      : " + getTitle());
-        System.out.println("Publisher  : " + getAuthor());
-        System.out.println("Issue No.  : " + issueNumber);
-        System.out.println("Month      : " + month);
-        System.out.println("Category   : " + category);
-        System.out.println("Status     : " + getAvailabilityStatus());
-        System.out.println("-----------------------------");
+        String status = isAvailable()
+            ? GREEN + "✔ Available" + RESET
+            : RED   + "✘ Borrowed"  + RESET;
+
+        System.out.println(PURPLE + "  ┌──────────────────────────────────────┐" + RESET);
+        System.out.println(PURPLE + "  │  📰  " + BOLD + WHITE + "MAGAZINE" + RESET + PURPLE + "                             │" + RESET);
+        System.out.println(PURPLE + "  ├──────────────────────────────────────┤" + RESET);
+        System.out.println(PURPLE + "  │ " + CYAN + " ID       : " + RESET + WHITE + getItemId()  + RESET);
+        System.out.println(PURPLE + "  │ " + CYAN + " Title    : " + RESET + WHITE + getTitle()   + RESET);
+        System.out.println(PURPLE + "  │ " + CYAN + " Publisher: " + RESET + WHITE + getAuthor()  + RESET);
+        System.out.println(PURPLE + "  │ " + CYAN + " Issue No.: " + RESET + WHITE + issueNumber  + RESET);
+        System.out.println(PURPLE + "  │ " + CYAN + " Month    : " + RESET + WHITE + month        + RESET);
+        System.out.println(PURPLE + "  │ " + CYAN + " Category : " + RESET + WHITE + category     + RESET);
+        System.out.println(PURPLE + "  │ " + CYAN + " Status   : " + RESET + status);
+        System.out.println(PURPLE + "  └──────────────────────────────────────┘" + RESET);
     }
 }
